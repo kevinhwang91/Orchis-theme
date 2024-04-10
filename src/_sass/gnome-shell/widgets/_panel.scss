@@ -3,9 +3,10 @@
 
 $panel_transition_duration: 250ms; // same as the overview transition duration
 $panel_height: if($panel_style == 'compact', $medium-size - 2px, $medium-size + 2px);
-$panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
+$panel_button_hpadding: 0;
 
 #panel {
+  font-size: 8pt;
   font-weight: bold;
   font-feature-settings: "tnum";
   padding: 0 !important;
@@ -150,7 +151,7 @@ $panel_button_hpadding: ($panel_height - $base-icon-size) / 2;
     // status area icons
     .system-status-icon {
       icon-size: $base-icon-size;
-      padding: $space-size;
+      padding: 0 $space-size;
       margin: 0;
     }
 

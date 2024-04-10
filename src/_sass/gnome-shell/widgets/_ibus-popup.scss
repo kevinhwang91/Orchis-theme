@@ -10,6 +10,7 @@
 }
 
 .candidate-popup-content {
+  font-size: 14pt;
   background-color: $surface;
   border-radius: $menu-radius;
   box-shadow: 0 3px 8px rgba(black, 0.2);
@@ -21,8 +22,8 @@
 
 .candidate-index {
   padding: 0 0.5em 0 0;
-  color: $text-disabled;
-  .candidate-box:selected & { color: on(dark, disabled); }
+  color: $text;
+  .candidate-box:selected & { color: on(dark, primary); }
 }
 
 .candidate-box {

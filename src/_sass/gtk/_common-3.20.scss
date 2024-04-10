@@ -37,12 +37,12 @@
 
 %selected_items {
   color: $text;
-  background-color: mix($text, $base, 10%);
+  // background-color: mix($text, $base, 10%);
 }
 
 %selected_items_color {
-  color: $primary;
-  background-color: rgba($primary, 0.2);
+  color: $text;
+  // background-color: rgba($primary, 0.2);
 }
 
 %selected_items_primary {

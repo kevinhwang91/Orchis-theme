@@ -29,25 +29,25 @@
   $brightness: (red($color) * 299 + green($color) * 587 + blue($color) * 114) / 1000;
 
   @if ($brightness >= 156) {
-    @if ($state == 'primary') { @return rgba(black, 0.87); }
-    @if ($state == 'secondary') { @return rgba(black, 0.6); }
-    @if ($state == 'disabled') { @return rgba(black, 0.38); }
-    @if ($state == 'secondary-disabled') { @return rgba(black, 0.26); }
-    @if ($state == 'track') { @return rgba(black, 0.26); }
-    @if ($state == 'track-disabled') { @return rgba(black, 0.15); }
-    @if ($state == 'divider') { @return rgba(black, 0.12); }
-    @if ($state == 'secondary-fill') { @return rgba(black, 0.08); }
-    @if ($state == 'fill') { @return rgba(black, 0.04); }
+    @if ($state == 'primary') { @return rgba($background, 0.87); }
+    @if ($state == 'secondary') { @return rgba($background, 0.6); }
+    @if ($state == 'disabled') { @return rgba($background, 0.38); }
+    @if ($state == 'secondary-disabled') { @return rgba($background, 0.26); }
+    @if ($state == 'track') { @return rgba($background, 0.26); }
+    @if ($state == 'track-disabled') { @return rgba($background, 0.15); }
+    @if ($state == 'divider') { @return rgba($background, 0.12); }
+    @if ($state == 'secondary-fill') { @return rgba($background, 0.08); }
+    @if ($state == 'fill') { @return rgba($background, 0.04); }
   } @else {
-    @if ($state == 'primary') { @return white; }
-    @if ($state == 'secondary') { @return rgba(white, 0.7); }
-    @if ($state == 'disabled') { @return rgba(white, 0.5); }
-    @if ($state == 'secondary-disabled') { @return rgba(white, 0.3); }
-    @if ($state == 'track') { @return rgba(white, 0.3); }
-    @if ($state == 'track-disabled') { @return rgba(white, 0.15); }
-    @if ($state == 'divider') { @return rgba(white, 0.12); }
-    @if ($state == 'secondary-fill') { @return rgba(white, 0.08); }
-    @if ($state == 'fill') { @return rgba(white, 0.04); }
+    @if ($state == 'primary') { @return $grey-200; }
+    @if ($state == 'secondary') { @return $grey-300; }
+    @if ($state == 'disabled') { @return rgba($grey-200, 0.5); }
+    @if ($state == 'secondary-disabled') { @return rgba($grey-200, 0.3); }
+    @if ($state == 'track') { @return rgba($grey-200, 0.3); }
+    @if ($state == 'track-disabled') { @return rgba($grey-200, 0.15); }
+    @if ($state == 'divider') { @return rgba($grey-200, 0.12); }
+    @if ($state == 'secondary-fill') { @return rgba($grey-200, 0.08); }
+    @if ($state == 'fill') { @return rgba($grey-200, 0.04); }
   }
 }
 
@@ -88,10 +88,10 @@
   @if ($type == 'd') { @return $grey-250; }
 
   @if ($blackness == 'true') {
-    @if ($type == 'e') { @return $black; }
-    @if ($type == 'f') { @return $grey-950; }
-    @if ($type == 'g') { @return $grey-900; }
-    @if ($type == 'h') { @return $grey-850; }
+    @if ($type == 'e') { @return $grey-850; }
+    @if ($type == 'f') { @return $grey-800; }
+    @if ($type == 'g') { @return $grey-750; }
+    @if ($type == 'h') { @return $grey-700; }
   } @else {
     @if ($type == 'e') { @return $grey-800; }
     @if ($type == 'f') { @return $grey-750; }
@@ -107,8 +107,8 @@
 $primary:                               theme(color);
 $drop_target_color:                     $orange-dark;
 $background:                            if($variant == 'light', background(c), background(e));
-$surface:                               if($variant == 'light', background(a), background(h));
-$base:                                  if($variant == 'light', background(a), background(g));
+$surface:                               if($variant == 'light', background(a), background(f));
+$base:                                  if($variant == 'light', background(a), background(f));
 $base-alt:                              if($variant == 'light', background(b), background(f));
 
 @if $colorscheme != 'default' {
@@ -122,8 +122,8 @@ $osd:                                   background(e);
 $scrim:                                 background(f);
 $scrim-alt:                             background(g);
 $scrim-inverse:                         rgba(white, 0.1);
-$titlebar:                              if($topbar == 'dark', background(g), background(a));
-$titlebar-backdrop:                     if($topbar == 'dark', background(h), background(b));
+$titlebar:                              if($topbar == 'dark', background(if($blackness == 'true', e, f)), background(a));
+$titlebar-backdrop:                     if($topbar == 'dark', background(if($blackness == 'true', f, g)), background(b));
 
 $keyboard:                              if($variant == 'light', $grey-050, $grey-800); // for gnome-shell keyboard
 $keyboard-alt:                          if($variant == 'light', $grey-300, $grey-900); // for gnome-shell keyboard

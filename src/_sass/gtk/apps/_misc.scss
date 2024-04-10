@@ -129,7 +129,7 @@ window.background.chromium {
   spinner { color: $primary; }
 
   // For text field
-  textview.view { background-color: transparent; }
+  textview.view { background-color: $background; }
 
   // For prominent button, starred icon, etc.
   treeview.view.cell:selected:focus {

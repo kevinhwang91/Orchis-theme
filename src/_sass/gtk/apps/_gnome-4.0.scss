@@ -86,10 +86,6 @@
     }
   
     .content-pane {
-      &, &:backdrop {
-        background-color: transparent;
-      }
-
       headerbar {
         &, &:backdrop {
           box-shadow: inset 0 1px highlight($titlebar);
@@ -130,6 +126,13 @@
 
           entry { @extend %titlebar-entry-reset; }
         }
+      }
+
+      .toolbar {
+        color: $text;
+        background-color: $base;
+        border-radius: $window-radius - $space-size;
+        margin: 0 $space-size $space-size 0;
       }
     }
 
@@ -387,6 +390,7 @@
       }
     }
 
+    .nautilus-network-view,
     .nautilus-list-view {
       color: $text;
       background-color: $base;
@@ -452,6 +456,16 @@
       @extend %small-button;
     }
   }
+
+  #NautilusPathBar {
+    background-color: $titlebar-fill;
+  
+    #NautilusPathButton {
+      &.current-dir {
+        color: $titlebar-text;
+      }
+    }
+  }
 }
 
 #NautilusViewCell {
@@ -468,7 +482,7 @@
   > menubutton > button.image-button {
     min-width: $menuitem-size;
     min-height: $menuitem-size;
-    margin: ($medium-size - $menuitem-size) / 2 0;
+    // margin: ($medium-size - $menuitem-size) / 2 0;
     padding: 0;
   }
 
@@ -476,16 +490,15 @@
 }
 
 #NautilusPathBar {
-  background-color: $titlebar-fill;
+  background-color: $fill;
   border-radius: $circular-radius;
-  margin: $space-size 0;
 
   #NautilusPathButton {
     margin: 0 $space-size / 2;
     border-radius: $circular-radius;
 
     &.current-dir {
-      color: $titlebar-text;
+      color: $text;
 
       &:hover, &:active {
         background: none;
@@ -509,6 +522,12 @@
    padding: 0;
    min-height: $small-size - 2px;
    min-width: $small-size - 2px;
+  }
+}
+
+#NautilusFileChooser {
+  .content-pane {
+    background-color: $base;
   }
 }
 
@@ -574,6 +593,18 @@ window > widget {
     > box > scrolledwindow > viewport > widget > stack {
       background-color: $base;
     }
+  }
+}
+
+//
+// Gnome Tweaks
+//
+
+.tweak-titlebar-left + separator {
+  background-color: $titlebar;
+
+  &:backdrop {
+    background-color: $titlebar-backdrop;
   }
 }
 

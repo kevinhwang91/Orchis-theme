@@ -176,11 +176,20 @@ install() {
   cp -r "$SRC_DIR/cinnamon/thumbnails/thumbnail$theme${ELSE_DARK:-}$ctype.png"               "$THEME_DIR/cinnamon/thumbnail.png"
 
   mkdir -p                                                                                   "$THEME_DIR/metacity-1"
-  cp -r "$SRC_DIR/metacity-1/metacity-theme-2${color}.xml"                                   "$THEME_DIR/metacity-1/metacity-theme-2.xml"
-  cp -r "$SRC_DIR/metacity-1/metacity-theme-3.xml"                                           "$THEME_DIR/metacity-1"
-  cp -r "$SRC_DIR/metacity-1/assets"                                                         "$THEME_DIR/metacity-1"
-  cp -r "$SRC_DIR/metacity-1/thumbnail${ELSE_DARK:-}.png"                                    "$THEME_DIR/metacity-1/thumbnail.png"
-  cd "$THEME_DIR/metacity-1" && ln -s metacity-theme-2.xml metacity-theme-1.xml
+
+  if [[ "$macstyle" == "true" ]] ; then
+    cp -r "$SRC_DIR/metacity-1/metacity-theme-3-mac.xml"                                     "$THEME_DIR/metacity-1/metacity-theme-3.xml"
+    cp -r "$SRC_DIR/metacity-1/assets-mac"                                                   "$THEME_DIR/metacity-1/assets"
+    cp -r "$SRC_DIR/metacity-1/thumbnail${ELSE_DARK:-}-mac.png"                              "$THEME_DIR/metacity-1/thumbnail.png"
+  else
+    cp -r "$SRC_DIR/metacity-1/metacity-theme-3.xml"                                         "$THEME_DIR/metacity-1"
+    cp -r "$SRC_DIR/metacity-1/assets"                                                       "$THEME_DIR/metacity-1"
+    cp -r "$SRC_DIR/metacity-1/thumbnail${ELSE_DARK:-}.png"                                  "$THEME_DIR/metacity-1/thumbnail.png"
+  fi
+
+  (
+    cd "$THEME_DIR/metacity-1" && ln -s metacity-theme-3.xml metacity-theme-2.xml && ln -s metacity-theme-3.xml metacity-theme-1.xml
+  )
 
   mkdir -p                                                                                   "$THEME_DIR/plank"
   cp -r "$SRC_DIR/plank/"*                                                                   "$THEME_DIR/plank"
@@ -446,10 +455,15 @@ check_shell() {
   elif [[ "$shell" == "46" ]]; then
     GS_VERSION="46-0"
     echo "Install for gnome-shell version = 46.0"
+  elif [[ "$shell" == "47" ]]; then
+    GS_VERSION="47-0"
+    echo "Install for gnome-shell version = 47.0"
   elif [[ "$(command -v gnome-shell)" ]]; then
     gnome-shell --version
     SHELL_VERSION="$(gnome-shell --version | cut -d ' ' -f 3 | cut -d . -f -1)"
-    if [[ "${SHELL_VERSION:-}" -ge "46" ]]; then
+    if [[ "${SHELL_VERSION:-}" -ge "47" ]]; then
+      GS_VERSION="47-0"
+    elif [[ "${SHELL_VERSION:-}" -ge "46" ]]; then
       GS_VERSION="46-0"
     elif [[ "${SHELL_VERSION:-}" -ge "44" ]]; then
       GS_VERSION="44-0"
@@ -462,7 +476,7 @@ check_shell() {
     fi
   else
     echo "'gnome-shell' not found, using styles for last gnome-shell version available."
-    GS_VERSION="46-0"
+    GS_VERSION="47-0"
   fi
 }
 

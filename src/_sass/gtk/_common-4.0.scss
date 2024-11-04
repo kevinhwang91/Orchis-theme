@@ -480,8 +480,8 @@ editablelabel > stack > text {
 
 button {
   min-height: 24px;
-  min-width: 16px;
-  padding: ($medium-size - 24px) / 2 ($medium-size - 16px) / 2;
+  min-width: 24px;
+  padding: ($medium-size - 24px) / 2;
   border-radius: $corner-radius;
   font-weight: 500;
   @extend %button-basic;
@@ -507,12 +507,12 @@ button {
   }
 
   &.text-button {
-    min-width: 64px - 16px * 2;
+    min-width: 32px;
     padding-left: 16px;
     padding-right: 16px;
 
     &.flat {
-      min-width: 64px - 8px * 2;
+      min-width: 48px;
       padding-left: 8px;
       padding-right: 8px;
     }
@@ -787,35 +787,35 @@ button.link {
  * GtkSpinButton *
  *****************/
 spinbutton {
-  &:not(.vertical),
-  &.vertical {
-    @include entry(normal);
-    &:focus-within { @include entry(checked); }
-    &:disabled { @include entry(disabled); }
-    border-radius: $corner-radius;
+  @include entry(normal);
+  &:focus-within { @include entry(checked); }
+  &:disabled { @include entry(disabled); }
+  border-radius: $corner-radius;
+  padding: 0;
+  border-spacing: 0;
+
+  > text {
+    margin: 0;
+    border-image: none;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: transparent;
+  }
+
+  > button.image-button.up,
+  > button.image-button.down {
+    @extend %button-flat-simple;
+    @extend %small-button;
     padding: 0;
-    border-spacing: 0;
+    margin: $space-size;
+    border: none;
 
-    > text {
-      margin: 0;
-      border-image: none;
-      border-radius: 0;
-      box-shadow: none;
+    // Remove unwanted focus indicator
+    &:focus:not(:hover):not(:active):not(:disabled) {
       background-color: transparent;
-    }
-
-    > button {
-      @extend %button-flat-simple;
-      @extend %small-button;
-      padding: 0;
-      border: $space-size solid transparent;
-
-      // Remove unwanted focus indicator
-      &:focus:not(:hover):not(:active):not(:disabled) {
-        box-shadow: inset 0 0 0 9999px transparent;
-        color: $text-secondary;
-        outline: none;
-      }
+      color: $text-secondary;
+      outline: none;
+      box-shadow: none;
     }
   }
 
@@ -825,17 +825,17 @@ spinbutton {
     // and nuke the style on the internal entry
 
     > text {
-      min-width: $large-size - 8px * 2;
+      min-width: $large-size - 16px;
       // reset all the other props since the spinbutton node is styled here
       padding-left: $space-size * 2;
     }
 
     > button {
       &.up:dir(ltr),
-      &.down:dir(rtl) { margin-left: -$space-size / 2; }
+      &.down:dir(rtl) { margin-left: $space-size / 2; }
 
       &.up:dir(rtl),
-      &.down:dir(ltr) { margin-right: -$space-size / 2; }
+      &.down:dir(ltr) { margin-right: $space-size / 2; }
     }
   }
 
@@ -849,9 +849,11 @@ spinbutton {
       padding: 0;
     }
 
-    > button {
-      &.up { margin: 0 $space-size / 2; }
-      &.down { margin: 0 $space-size / 2; }
+    > button.image-button.up,
+    > button.image-button.down {
+      margin: $space-size;
+      min-width: $large-size - $space-size * 3;
+      min-height: $large-size - $space-size * 3;
     }
   }
 
@@ -875,8 +877,12 @@ spinbutton {
  * ComboBoxes *
  **************/
 
-dropdown > button > box {
-  border-spacing: $space-size;
+dropdown > button {
+  > box {
+    border-spacing: $space-size;
+  }
+
+  label { margin-left: $space-size; }
 }
 
 dropdown,
@@ -1003,9 +1009,11 @@ button.combo:only-child {
 toolbar {
   padding: $space-size;
   background-color: $background;
-  border-spacing: $space-size;
+  border-spacing: 0;
 
   > button { @extend %button-flat; }
+
+  button.pill { padding: ($medium-size - 24px) / 2 32px; }
 
   // on OSD
   .osd & { background-color: transparent; }
@@ -1350,12 +1358,10 @@ headerbar {
 
     button, entry, spinbutton {
       border-radius: $menuitem-radius;
-      margin: 0;
     }
 
     .linked:not(.vertical) > button:not(.suggested-action):not(.destructive-action) {
       border-radius: 0;
-      margin: 0;
 
       &:first-child { border-radius: $menuitem-radius 0 0 $menuitem-radius; }
       &:last-child { border-radius: 0 $menuitem-radius $menuitem-radius 0; }
@@ -1364,7 +1370,6 @@ headerbar {
   }
 
   stackswitcher { // reset
-    margin: $space-size 0;
     border-radius: $circular-radius;
 
     &.linked:not(.vertical) > button:not(.suggested-action):not(.destructive-action).text-button {
@@ -1400,7 +1405,7 @@ headerbar {
   }
 
   > windowhandle > box {
-    padding: 0 $space-size;
+    padding: $space-size;
 
     &,
     > box.start,
@@ -1421,30 +1426,9 @@ headerbar {
     }
   }
 
-  // add vertical margins to common widget on the headerbar to avoid them spanning the whole height
-  entry,
-  spinbutton,
-  button,
-  stackswitcher,
-  menubutton,
-  splitbutton {
-    margin-top: $space-size;
-    margin-bottom: $space-size;
-  }
-
-  menubutton > button,
-  spinbutton > button,
-  splitbutton > button,
-  splitbutton > menubutton,
-  .linked > menubutton,
-  entry > menubutton {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-
   switch {
-    margin-top: ($large-size - 24px) / 2;
-    margin-bottom: ($large-size - 24px) / 2;
+    margin-top: ($large-size - 30px) / 2;
+    margin-bottom: ($large-size - 30px) / 2;
   }
 
   &.selection-mode {
@@ -1504,6 +1488,10 @@ headerbar {
     .fullscreen & {
       box-shadow: none;
       border-radius: 0;
+    }
+
+    > windowhandle > box {
+      padding: 0 $space-size;
     }
 
     windowcontrols {
@@ -3371,7 +3359,8 @@ row {
     }
   }
 
-  button:checked & {
+  button:checked &.activatable,
+  button:checked:hover &.activatable {
     color: on($primary);
   }
 
@@ -3590,11 +3579,12 @@ row.entry {
 row.spin {
   spinbutton {
     background: none;
-    border-spacing: $space-size;
     box-shadow: none;
+    border-spacing: $space-size;
 
-    &, &:focus {
+    &, &:focus &:focus-within {
       outline: none;
+      background: none;
     }
 
     > button.image-button.up:not(.flat):not(.raised):not(.suggested-action):not(.destructive-action):not(.opaque):last-child,
@@ -3604,7 +3594,8 @@ row.spin {
         @extend %circular-button;
         min-width: $menuitem-size;
         min-height: $menuitem-size;
-        margin: 10px 2px;
+        padding: 0;
+        margin: $space-size 2px;
         border: none;
       }
     }
@@ -3696,7 +3687,7 @@ $boxed-radius: $corner-radius - 1px;
   border-bottom: 1px solid $divider;
 
   .osd &:focus:focus-visible {
-    outline-color: $fill;
+    outline-color: $overlay-focus;
   }
 }
 
@@ -4314,13 +4305,6 @@ separator.sidebar {
 /****************
  * File chooser *
  ****************/
-// dim the sidebar icons, see bug #786613 for details on this oddity
-row image.sidebar-icon {
-  transition: color $duration $ease-out;
-  color: $text-secondary;
-
-  &:disabled { color: $text-secondary-disabled; }
-}
 
 placessidebar {
   > viewport.frame { border-style: none; }
@@ -4343,8 +4327,6 @@ placessidebar {
         background-color: $overlay-checked;
         color: $primary;
         font-weight: 500;
-
-        image.sidebar-icon { color: $primary; }
       }
 
       &:disabled { color: $text-disabled; }
@@ -4370,14 +4352,10 @@ placessidebar {
 
       &.sidebar-new-bookmark-row {
         color: $primary;
-
-        image.sidebar-icon { color: $primary; }
       }
 
       &:drop(active) {
-        transition: $transition,
-                    box-shadow 0ms;
-        box-shadow: inset 0 0 0 9999px $overlay-hover;
+        background-color: $overlay-hover;
       }
     }
   }
@@ -4772,6 +4750,11 @@ window {
       box-shadow: none;
       transition: none;
     }
+
+    &.ssd-frame {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
   }
 
   &.solid-csd {
@@ -4782,6 +4765,12 @@ window {
     background-color: $titlebar;
 
     &:backdrop { background-color: $titlebar-backdrop; }
+  }
+
+  // server-side decorations as used by mutter
+  &.ssd {
+    // just doing borders, wm draws actual shadows
+    box-shadow: 0 0 0 1px $border;
   }
 }
 

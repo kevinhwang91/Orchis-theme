@@ -21,7 +21,7 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
   spacing-columns: $space-size * 2;
 }
 
-.quick-toggle, .quick-menu-toggle {
+.quick-toggle, .quick-toggle-has-menu {
   border-radius: $circular-radius;
   min-width: if($compact == 'false', 12em, 10.5em);
   max-width: if($compact == 'false', 12em, 10.5em);
@@ -74,7 +74,7 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
   .quick-toggle-icon { icon-size: $base-icon-size; }
 }
 
-.quick-menu-toggle {
+.quick-toggle-has-menu {
   .quick-toggle {
     min-width: auto;
     max-width: auto;
@@ -88,36 +88,42 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
     &:rtl:last-child { border-radius: $circular-radius; }
   }
 
-  .quick-toggle-arrow {
-    background-color: $secondary-fill !important;
+  .quick-toggle-menu-button {
+    background-color: rgba($text, 0.09) !important;
     padding: $space-size $space-size * 1.75;
     border: none !important;
 
     &:hover {
-      background-color: $divider !important;
+      background-color: rgba($text, 0.16) !important;
     }
 
     &:active {
-      background-color: $track !important;
+      background-color: rgba($text, 0.26) !important;
     }
 
     &:checked {
-      background-color: $primary !important;
-      color: on($primary);
-  
+      background-color: mix(on($primary), $primary, 5%) !important;
+      color: on($primary) !important;
+
       &:hover {
-        background-color: mix(on($primary), $primary, 10%) !important;
-        color: on($primary);
+        background-color: mix(on($primary), $primary, 15%) !important;
+        color: on($primary) !important;
       }
-  
+
       &:active {
-        background-color: mix(on($primary), $primary, 20%) !important;
-        color: on($primary);
+        background-color: mix(on($primary), $primary, 25%) !important;
+        color: on($primary) !important;
       }
     }
 
     &:ltr { border-radius: 0 $circular-radius $circular-radius 0; }
     &:rtl { border-radius: $circular-radius 0 0 $circular-radius; }
+  }
+
+  .quick-toggle-separator {
+    width: 0px;
+    opacity: 0;
+    visibility: hidden;
   }
 }
 

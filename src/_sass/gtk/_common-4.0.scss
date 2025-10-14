@@ -1428,10 +1428,10 @@ headerbar {
     }
   }
 
-  switch {
-    margin-top: ($large-size - 30px) / 2;
-    margin-bottom: ($large-size - 30px) / 2;
-  }
+  // switch {
+  //   margin-top: ($large-size - 30px) / 2;
+  //   margin-bottom: ($large-size - 30px) / 2;
+  // }
 
   &.selection-mode {
     // 0.1ms was a workaround for https://gitlab.gnome.org/GNOME/gtk/issues/698

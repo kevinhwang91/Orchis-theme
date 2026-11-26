@@ -191,7 +191,8 @@ $toggle-height: $space-size * 4 + $margin-size + $base-icon-size;
 .quick-toggle-menu {
   border-radius: $space-size * 5 !important;
   padding: $space-size * 2;
-  margin: $space-size * 2 $space-size * 3.5 0;
+  margin-top: $space-size * 2;
+  margin-bottom: 0;
 
   @if $submenu_style =='true' {
     background-color: $surface !important;

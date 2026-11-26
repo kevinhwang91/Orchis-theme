@@ -6,6 +6,9 @@ on:
 
   workflow_dispatch: # click the button on Github repo!
 
+permissions:
+  contents: write
+
 jobs:
   sync_latest_from_upstream:
     runs-on: ubuntu-latest
@@ -15,22 +18,25 @@ jobs:
       - name: Checkout target repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.UPTODATE }}
+          persist-credentials: false
+          fetch-depth: 0
 
       - name: Sync upstream changes
         id: sync
         uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.1
         with:
           target_sync_branch: master
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
           upstream_sync_branch: master
           upstream_sync_repo: vinceliuice/Orchis-theme
+          shallow_since: '1970-01-01'
 
       - name: Show value of 'has_new_commits'
         run: echo ${{ steps.sync.outputs.has_new_commits }}
 
       - name: New commits found
         if: steps.sync.outputs.has_new_commits == 'true'
-        run: echo "New commits were found to sync."  && exit 123
+        run: echo "New commits were found and synced."  && exit 123
 
       - name: No new commits
         if: steps.sync.outputs.has_new_commits == 'false'

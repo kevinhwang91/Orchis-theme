@@ -13,6 +13,8 @@ jobs:
   sync_latest_from_upstream:
     runs-on: ubuntu-latest
     name: Sync latest commits from upstream repo
+    outputs:
+      has_new_commits: ${{ steps.sync.outputs.has_new_commits }}
 
     steps:
       - name: Checkout target repo
@@ -34,11 +36,17 @@ jobs:
       - name: Show value of 'has_new_commits'
         run: echo ${{ steps.sync.outputs.has_new_commits }}
 
-      - name: New commits found
-        if: steps.sync.outputs.has_new_commits == 'true'
-        run: echo "New commits were found and synced."  && exit 123
-
       - name: No new commits
         if: steps.sync.outputs.has_new_commits == 'false'
         run: echo "There were no new commits."
+
+  notify:
+    needs: sync_latest_from_upstream
+    if: needs.sync_latest_from_upstream.outputs.has_new_commits == 'true'
+    runs-on: ubuntu-latest
+    name: Notify upstream sync
+
+    steps:
+      - name: New commits found
+        run: echo "New commits were found and synced." && exit 123
 
